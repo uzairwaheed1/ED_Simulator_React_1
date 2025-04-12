@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar-container{
+  background-color: #008080;
+
+}
+.form-container{
+  padding: 22px;
+  border: 1px solid rgb(121 116 116 / 50%);
+  border-radius: 19px;
+  width: 50%;
+}
+.form-main-container{
+  display: flex
+  ;
+      justify-content: center;
+}
+.simulate-button > Button{
+  background-color: #008080;
+}
