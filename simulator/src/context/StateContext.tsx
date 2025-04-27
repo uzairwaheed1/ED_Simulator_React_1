@@ -6,6 +6,9 @@ type StateContextType = {
   setShowTable: React.Dispatch<React.SetStateAction<boolean>>;
   tableData: any[]; // Replace `any` with the actual type of your table data
   setTableData: React.Dispatch<React.SetStateAction<any[]>>;
+  cpData: any[];
+  setCpData: React.Dispatch<React.SetStateAction<any[]>>;
+
   gantChartData: any[]; // Replace `any` with the actual type of your Gantt chart data
   setGantChartData: React.Dispatch<React.SetStateAction<any[]>>;
   showGantChart: boolean;
@@ -63,6 +66,7 @@ export const StateProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [showTable, setShowTable] = useState(false);
   const [tableData, setTableData] = useState<any[]>([]);
+  const [cpData, setCpData] = useState<any[]>([]);
   const [gantChartData, setGantChartData] = useState<any[]>([]);
   const [serverUtilization, setServerUtilization] = useState<any[]>([]);
   const [showGantChart, setShowGantChart] = useState(false);
@@ -96,6 +100,8 @@ export const StateProvider: React.FC<{ children: React.ReactNode }> = ({
         setShowTable,
         tableData,
         setTableData,
+        cpData,
+        setCpData,
         gantChartData,
         setGantChartData,
         showGantChart,

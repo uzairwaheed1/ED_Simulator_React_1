@@ -2,7 +2,7 @@ import { simulate } from "@/utils/simulationUtils";
 
 export const handleSimulationSubmit = (
     values: any,
-    { setTableData, setShowTable, setGantChartData, setShowGantChart, setServerUtilization, }: any
+    { setTableData, setShowTable, setCpData ,setGantChartData, setShowGantChart, setServerUtilization, }: any
   ) => {
     const {
       server,
@@ -29,7 +29,9 @@ export const handleSimulationSubmit = (
     }
   
     if (results) {
+      console.log("Simulation Results:", results);
       setTableData(results.QueueCustomers);
+      setCpData(results.cpDataArray)
       setShowTable(true);
       setGantChartData(results.events);
       setShowGantChart(true);

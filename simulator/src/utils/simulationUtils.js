@@ -1,29 +1,109 @@
+// import { cp } from "fs";
+// import { console } from "inspector";
+
 function factorial(n) {
   return n === 0 ? 1 : n * factorial(n - 1);
 }
-function calculateCP(lambda, x) {
-  return (Math.pow(lambda, x) * Math.exp(-lambda)) / factorial(x);
-}
+// function calculateCP(lambda, x) {
+//   return (Math.pow(lambda, x) * Math.exp(-lambda)) / factorial(x);
+// }
 function calculateLcg(seed, A = 55, B = 9, M = 1994) {
   return (A * seed + B) % M;
 }
-function generateInterarrivalTimes(lambda, numCustomers) {
-  const interarrivalTimes = [0];
-  for (let i = 0; i < numCustomers - 1; i++) {
-    const rand = Math.random();
-    let cumulativeProbability = 0;
-    let x = 0;
-    while (true) {
-      cumulativeProbability += calculateCP(lambda, x);
-      if (rand <= cumulativeProbability) {
-        interarrivalTimes.push(x);
-        break;
-      }
-      x++;
-    }
+// function generateInterarrivalTimes(lambda, numCustomers) {
+//   const interarrivalTimes = [0];
+//   for (let i = 0; i < numCustomers - 1; i++) {
+//     const rand = Math.random();
+//     let cumulativeProbability = 0;
+//     let x = 0;
+//     while (true) {
+//       cumulativeProbability += calculateCP(lambda, x);
+//       if (rand <= cumulativeProbability) {
+//         interarrivalTimes.push(x);
+//         break;
+//       }
+//       x++;
+//     }
+//   }
+//   return interarrivalTimes;
+// }
+
+function cpCalc(arrivalMean) {
+  let cplookup = 0;
+  let cp = 0;
+  let count = 0;
+  let cparray = [];
+  let cplookuparray = [];
+
+  while (cp < 1) {
+      let calc = Math.pow(2.71828, -arrivalMean);
+      calc = calc * Math.pow(arrivalMean, count);
+      calc = calc / factorial(count);
+
+      cplookup = cp;
+      cplookuparray[count] = cplookup;
+
+      cp = calc + cplookup;
+      cparray[count] = cp;
+
+      // console.log(cp + '\n' + count)
+      count = count + 1;
   }
-  return interarrivalTimes;
+
+  let array = [cparray, cplookuparray];
+  return array;
 }
+let cplookupGlobal = []; // 🌟 GLOBAL array bana diya
+let cpDataArray = []
+
+
+function generateInterarrivalTimes(arrivalMean) {
+    let interarrival = [];
+    console.log("Arrival Mean: ", arrivalMean);
+
+    let arraymain = cpCalc(arrivalMean);
+    let cparray = arraymain[0];
+    let cplookuparray = arraymain[1];
+    cpDataArray[0] = cplookuparray;
+    cpDataArray[1] = cparray;
+
+    console.log("CP Array: ", cparray);
+    console.log("CP Lookup Array: ", cplookuparray);
+
+    // Global array mein store kar diya
+    cplookupGlobal = cplookuparray;
+
+    interarrival[0] = 0;
+    console.log("Initial Interarrival: ", interarrival[0]);
+
+    let interarrivalIndex = [];
+    interarrivalIndex[0] = 0;
+
+    for (let i = 1; i < cparray.length; i++) {
+        interarrivalIndex[i] = i;
+        console.log("Interarrival Index: ", interarrivalIndex[i]);
+        let random = Math.random();
+        if (random == 0) random += 0.1;
+        console.log(`Random Number [${i}]: `, random);
+
+        for (let j = 0; j < cplookuparray.length; j++) {
+            if (random > cplookuparray[j] && random < cparray[j]) {
+                interarrival[i] = j + 1;
+                console.log(`Random ${random} lies between CPlookup[${j}] (${cplookuparray[j]}) and CP[${j}] (${cparray[j]}), so Interarrival[${i}] = ${interarrival[i]}`);
+
+            }
+        }
+    }
+    cpDataArray[2] = interarrivalIndex;
+    cpDataArray[3] = interarrival;
+    console.log("Final Interarrival Array: ", interarrival);
+    console.log("cpDataArray: ", cpDataArray);
+
+    return interarrival;
+}
+
+
+
 function generateServiceTimes(mu, numCustomers) {
   const serviceTimes = [];
   for (let i = 0; i < numCustomers; i++) {
@@ -216,21 +296,21 @@ export function simulate(
   a = 0,
   b = 0
 ) {
-  const interarrivalTimes = generateInterarrivalTimes(lambda, customersCount);
+  const interarrivalTimes = generateInterarrivalTimes(lambda);
   const arrivals = interarrivalTimes.reduce((acc, curr, idx) => {
     acc.push((idx === 0 ? 0 : acc[idx - 1]) + curr);
     return acc;
   }, []);
   let serviceTimes;
   if (dist === "exponential") {
-    serviceTimes = generateServiceTimes(mue, customersCount);
+    serviceTimes = generateServiceTimes(mue, cplookupGlobal.length);
   } else if (dist === "uniform") {
-    serviceTimes = generateUniformServiceTimes(customersCount, a, b);
+    serviceTimes = generateUniformServiceTimes(cplookupGlobal.length, a, b);
   } else if (dist === "normal") {
-    serviceTimes = generateNormalServiceTimes(customersCount, mue, sd);
+    serviceTimes = generateNormalServiceTimes(cplookupGlobal.length, mue, sd);
   }
-  const priorities = generatePriorities(customersCount, 1, 3);
+  const priorities = generatePriorities(cplookupGlobal.length, 1, 3);
   const { QueueCustomers, events, serverUtilizations } =
     runPreemptiveSimulation(arrivals, serviceTimes, priorities, serversCount);
-  return { QueueCustomers, events, serverUtilizations };
+  return { QueueCustomers, events, serverUtilizations, cpDataArray };
 }

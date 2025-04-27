@@ -11,10 +11,14 @@ export function extractMetricsAndAverages(processes) {
   const calculateAverage = (arr) =>
     arr.reduce((sum, value) => sum + value, 0) / arr.length || 0;
 
-  const avgWaitingTime = Math.round(calculateAverage(waitingTimes) / 60);
-  const avgResponseTime = Math.round(calculateAverage(responseTimes) / 60);
-  const avgTurnaroundTime = Math.round(calculateAverage(turnaroundTimes) / 60);
-  const avgServiceTime = Math.round(calculateAverage(serviceTimes) / 60);
+  const avgWaitingTime = calculateAverage(waitingTimes).toFixed(2);
+  const avgResponseTime = calculateAverage(responseTimes).toFixed(2);
+  const avgTurnaroundTime = calculateAverage(turnaroundTimes).toFixed(2);
+  const avgServiceTime = calculateAverage(serviceTimes).toFixed(2);
+  console.log("avgServiceTime", avgServiceTime);
+  console.log("avgWaitingTime", avgWaitingTime);
+  console.log("avgResponseTime", avgResponseTime);
+  console.log("avgTurnaroundTime", avgTurnaroundTime);
 
   // Return results
   return {

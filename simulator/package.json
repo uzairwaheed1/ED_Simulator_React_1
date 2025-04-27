@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postbuild": "node ./node_modules/@netlify/next/dist/build.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -15,13 +16,16 @@
     "@mui/material": "^6.1.5",
     "@mui/x-charts": "^7.23.2",
     "@mui/x-data-grid": "^7.23.5",
+    "@netlify/next": "^1.4.9",
     "@tanstack/react-query": "^5.59.16",
     "axios": "^1.7.9",
     "formik": "^2.4.6",
+    "frappe-gantt": "^0.5.0",
     "next": "^15.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-toastify": "^10.0.6",
+    "sass": "^1.86.3",
     "xlsx-js-style": "^1.2.0",
     "yup": "^1.4.0"
   },

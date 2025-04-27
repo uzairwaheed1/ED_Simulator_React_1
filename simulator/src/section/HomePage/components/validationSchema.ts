@@ -5,10 +5,10 @@ const validationSchema = Yup.object().shape({
         .required("Server is required")
         .positive("Server must be a positive number")
         .max(100, "Server must not exceed 100"),
-    numberOfCustomers: Yup.number()
-        .required("Number of Customers is required")
-        .positive("Number of Customers must be a positive number")
-        .max(5000, "Number of Customers must not exceed 10,000"),
+    // numberOfCustomers: Yup.number()
+    //     .required("Number of Customers is required")
+    //     .positive("Number of Customers must be a positive number")
+    //     .max(5000, "Number of Customers must not exceed 10,000"),
     // minPriority: Yup.number()
     //     .required("Minimum Priority is required")
     //     .positive("Minimum Priority must be a positive number")

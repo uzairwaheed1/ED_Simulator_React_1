@@ -1,5 +1,6 @@
 import React from "react";
 import { useStateContext } from "../../context/StateContext"; // Adjust the path based on where your context is located
+import "../../styles/globals.css"
 
 // Type for the Event
 interface Event {
@@ -62,6 +63,7 @@ const GanttChart = () => {
                     event.time > previousEvent.time
                   ) {
                     idleTime = previousEvent.time;
+                    console.log(idleTime)
                     idle = true;
                   } else if (!previousEvent && event.time > 0) {
                     idleTime = 0;
@@ -78,7 +80,7 @@ const GanttChart = () => {
                           </div>
                         </div>
                       )}
-                      <div className="relative bg-muiBlue text-white p-2 border border-black w-32 text-center">
+                      <div className="relative bg-muiBlue text-white p-2 border border-black w-32 text-center gant_block">
                         <div>Customer {event.customerId} (Service)</div>
                         <div className="absolute -bottom-6 -left-1 text-lg mt-4 text-black">
                           {event.time}

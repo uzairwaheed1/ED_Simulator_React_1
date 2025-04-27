@@ -23,6 +23,7 @@ const DistributionForm = () => {
   const {
     setShowTable,
     setTableData,
+    setCpData,
     setShowGantChart,
     setGantChartData,
     setServerUtilization,
@@ -43,6 +44,7 @@ const DistributionForm = () => {
           handleSimulationSubmit(values, {
             setShowTable,
             setTableData,
+            setCpData,
             setShowGantChart,
             setGantChartData,
             setServerUtilization,
@@ -85,7 +87,7 @@ const DistributionForm = () => {
                     helperText={touched["server"] && errors["server"]}
                     {...getFieldProps("server")}
                   />
-                  <TextFieldInput
+                  {/* <TextFieldInput
                     placeholder={"Enter No. of Customers"}
                     label={"NO. of Customers"}
                     error={
@@ -97,7 +99,7 @@ const DistributionForm = () => {
                       errors["numberOfCustomers"]
                     }
                     {...getFieldProps("numberOfCustomers")}
-                  />
+                  /> */}
                   {/* <TextFieldInput
                     placeholder={"Enter Minimum Priority"}
                     label={"Min Priority"}

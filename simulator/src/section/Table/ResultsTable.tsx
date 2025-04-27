@@ -18,6 +18,15 @@ interface RowData {
   serverId: number;
 }
 
+// Define columns with the new names
+// Define columns for the CP Data Table (New table)
+const cpColumns: GridColDef[] = [
+  { field: "cpLookup", headerName: "CP lookup", width: 200 },
+  { field: "cp", headerName: "CP", width: 200 },
+  { field: "indexOfInterarrival", headerName: "Index of Interarrival", width: 200 },
+  { field: "interArrival", headerName: "Inter Arrival", width: 200 },
+];
+
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90 },
   { field: "arrivalTime", headerName: "Arrival Time", width: 120 },
@@ -32,11 +41,34 @@ const columns: GridColDef[] = [
 ];
 
 const ResultsTable = () => {
-  const { tableData } = useStateContext(); // Assume tableData is the state array
+  const { tableData, cpData } = useStateContext(); // Assume tableData is the state array
+
+  // Check if cpData is empty
+  if (!cpData || cpData.length === 0) {
+    return <div>No CP Data available</div>;
+  }
+
+  const cpRows = cpData[0].map((_: number, index: number) => ({
+    id: index,
+    cpLookup: cpData[0][index],
+    cp: cpData[1][index],
+    indexOfInterarrival: cpData[2][index],
+    interArrival: cpData[3][index],
+  }));
 
   return (
     <div className="flex flex-col items-center justify-center  mt-14">
-      <h3 className="md:text-3xl text-xl mb-4">Simulation Results</h3>
+       {/* CP Data Table */}
+        <h3 className="md:text-3xl text-xl mb-4">Simulation Results</h3>
+       {/* <h3 className="md:text-3xl text-xl mt-10 mb-4">CP Data</h3> */}
+      <Box sx={{ height: 360, width: "80%", marginBottom: "50px"
+ }}>
+        <DataGrid
+          rows={cpRows}
+          columns={cpColumns}
+          // pageSize={5} // Adjust number of rows per page
+        />
+      </Box>
       <Box sx={{ height: 360, width: "80%" }}>
         <DataGrid
           rows={tableData}

@@ -36,3 +36,15 @@ body {
 .simulate-button > Button{
   background-color: #008080;
 }
+.ganttChart {
+  width: 100%;
+  height: 500px; /* Ensure there's enough space for the chart */
+  display: block;
+}
+.gant_block{
+  background-color: #008080;
+}
+.simulate_queue > button{
+  background-color: #008080;
+
+}

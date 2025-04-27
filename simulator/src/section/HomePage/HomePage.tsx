@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { jsonToExcelDownload } from "./utils/downloadexcel";
+import FrappeGanttChart from "../FrappeGantChart/FrappeGanttChart";
 
 function HomePage() {
   const { showTable, showGantChart, tableData } = useStateContext();
@@ -26,7 +27,7 @@ function HomePage() {
         {showTable && (
           <div className="flex justify-end mr-36 mt-2">
             <button
-              className="bg-muiBlue text-white font-bold py-2 px-6 rounded-md shadow hover:bg-muiBlueDark transition duration-200"
+              className="gant_block text-white font-bold py-2 px-6 rounded-md shadow hover:bg-muiBlueDark transition duration-200"
               onClick={() =>
                 jsonToExcelDownload(tableData, "simulation-results")
               }
@@ -36,11 +37,13 @@ function HomePage() {
           </div>
         )}
         {showGantChart && <GanttChart />}
+        {/* {showGantChart && <FrappeGanttChart />} */}
+
         {/* Render button only on the client side */}
         {isClient && showGantChart && (
           <div className="my-8 text-center">
             <Link href="/analytics">
-              <button className="bg-muiBlue text-white font-bold py-2 px-6 rounded-md shadow hover:bg-muiBlueDark transition duration-200">
+              <button className="gant_block text-white font-bold py-2 px-6 rounded-md shadow hover:bg-muiBlueDark transition duration-200">
                 Go to Analytics
               </button>
             </Link>
