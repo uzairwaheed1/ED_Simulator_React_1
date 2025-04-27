@@ -1,6 +1,7 @@
 [build]
-command = "npm run build"
-publish = ".next"
+  command = "npm run build" 
+  publish = "simulator/.next"  
+  base = "simulator"  
 
 [functions]
-directory = "netlify/functions"
+  directory = "simulator/netlify/functions"  
